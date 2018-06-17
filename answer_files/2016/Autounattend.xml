@@ -60,7 +60,7 @@
                     <InstallFrom>
                         <MetaData wcm:action="add">
                             <Key>/IMAGE/NAME </Key>
-                            <Value>Windows Server 2016 SERVERDATACENTER</Value>
+                            <Value>Windows Server 2016 Datacenter</Value>
                         </MetaData>
                     </InstallFrom>
                     <InstallTo>
