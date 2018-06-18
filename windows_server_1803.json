@@ -1,0 +1,142 @@
+{
+  "variables": {
+    "autounattend": "./answer_files/server_1803/Autounattend.xml",
+    "guest_additions_mode": "disable",
+    "headless": "false",
+    "disk_size": "61440",
+    "disk_type_id": "1",    
+    "memory": "1024",
+    "cpu": "2",
+    "hyperv_switchname": "{{env `HYPERV_VIRTUAL_SWITCH`}}",
+    "vm_name": "windows-server-1803",
+    "iso_checksum_type": "sha1",
+    "iso_checksum": "7b389be8e691984b913c1985cbf35732a525f859",
+    "iso_url": "iso/en_windows_server_version_1803_x64_dvd_12063476.iso"
+  },
+  "builders": [
+    {
+      "name": "windows-server-1803-virtualbox",
+      "type": "virtualbox-iso",
+      "disk_size": "{{user `disk_size`}}",
+      "vboxmanage": [
+        [ "modifyvm", "{{.Name}}", "--memory", "1024" ],
+        [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
+      ],
+      "guest_additions_mode": "{{ user `guest_additions_mode` }}",
+      "guest_additions_path": "C:\\Program Files\\Oracle\\VirtualBox\\VBoxGuestAdditions.iso",
+      "guest_os_type": "Windows2016_64",      
+      "headless": "{{ user `headless` }}",
+      "iso_urls": [ "{{ user `iso_url` }}",
+                    "http://care.dlservice.microsoft.com/dl/download/1/4/9/149D5452-9B29-4274-B6B3-5361DBDA30BC/14393.0.161119-1705.RS1_REFRESH_SERVER_EVAL_X64FRE_EN-US.ISO"
+                  ],
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+      "boot_wait": "5m",
+      "vm_name": "{{user `vm_name`}}",
+      "communicator": "winrm",
+      "winrm_username": "vagrant",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "12h",
+      "winrm_port" : "5985",
+      "shutdown_command": "shutdown /s /t 0 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "shutdown_timeout": "15m",
+      "floppy_files": [
+        "{{user `autounattend`}}",
+        "./scripts/disable-winrm.ps1",
+        "./scripts/enable-winrm.ps1",
+        "./scripts/microsoft-updates.bat",
+        "./scripts/unattend.xml"
+      ]
+    },
+     {
+      "name": "windows-server-1803-hyperv",
+      "type": "hyperv-iso",
+      "boot_wait": "5m",      
+      "cpu": "{{user `cpu`}}",
+      "ram_size": "{{user `memory`}}",
+      "disk_size": "{{user `disk_size`}}",      
+      "enable_secure_boot": true,
+      "enable_virtualization_extensions": true,
+      "floppy_files": [
+        "{{user `autounattend`}}",
+        "./scripts/disable-screensaver.ps1",
+        "./scripts/disable-winrm.ps1",
+        "./scripts/enable-winrm.ps1",
+        "./scripts/microsoft-updates.bat",
+        "./scripts/unattend.xml",
+        "./scripts/sysprep.bat"
+      ],       
+      "guest_additions_mode": "disable",
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "iso_checksum_type": "{{user `iso_checksum_type`}}",
+      "iso_url": "{{user `iso_url`}}",     
+      "shutdown_command": "a:/sysprep.bat",
+      "switch_name": "{{user `hyperv_switchname`}}",      
+      "vm_name": "{{user `vm_name`}}",      
+      "communicator": "winrm",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "12h",
+      "winrm_username": "vagrant"
+    },
+     {
+      "name": "windows-server-1803-vmware",      
+      "type": "vmware-iso",
+      "disk_size": "{{user `disk_size`}}",
+
+      "headless": "{{ user `headless` }}",
+      "iso_urls": [ "{{ user `iso_url` }}",
+                    "http://care.dlservice.microsoft.com/dl/download/1/4/9/149D5452-9B29-4274-B6B3-5361DBDA30BC/14393.0.161119-1705.RS1_REFRESH_SERVER_EVAL_X64FRE_EN-US.ISO"
+                  ],
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+      "boot_wait": "5m",
+      "vm_name": "{{user `vm_name`}}",
+      "communicator": "winrm",
+      "winrm_username": "vagrant",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "12h",
+      "winrm_port" : "5985",
+      "shutdown_command": "shutdown /s /t 0 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "shutdown_timeout": "15m",
+      "floppy_files": [
+        "{{user `autounattend`}}",
+        "./scripts/disable-winrm.ps1",
+        "./scripts/enable-winrm.ps1",
+        "./scripts/microsoft-updates.bat",
+        "./scripts/unattend.xml"
+      ],        
+      "vmx_data": {
+          "gui.fitguestusingnativedisplayresolution": false,
+          "memsize": "{{user `memory`}}",
+          "numvcpus": "{{user `cpu`}}",
+          "scsi0.virtualDev": "lsisas1068",          
+          "ethernet0.present": "TRUE"
+      },
+      "vmx_data_post": {
+          "ethernet0.virtualDev": "vmxnet3"
+      }
+    }
+  ],
+  "provisioners": [    
+    {
+      "type": "windows-shell",
+      "scripts": [
+        "./scripts/vm-guest-tools.bat",
+        "./scripts/enable-rdp.bat",
+        "./scripts/compile-dotnet-assemblies.bat",
+        "./scripts/compact.bat"
+      ]     
+    }
+
+  ],
+  "post-processors": [
+    [{
+      "type": "vagrant",
+      "keep_input_artifact": true,
+      "output": "builds/windows_2016_std_{{.Provider}}.box",
+      "vagrantfile_template": "templates/vagrantfile-windows_2016.template"
+     }
+    ]
+  ]
+
+}
