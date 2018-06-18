@@ -133,7 +133,7 @@
     [{
       "type": "vagrant",
       "keep_input_artifact": true,
-      "output": "builds/windows_2016_std_{{.Provider}}.box",
+      "output": "builds/windows_server_1803_{{.Provider}}.box",
       "vagrantfile_template": "templates/vagrantfile-windows_2016.template"
      }
     ]
