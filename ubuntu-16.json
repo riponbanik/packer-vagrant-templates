@@ -7,10 +7,10 @@
     "memory": "512",
     "cpu": "1",
     "hyperv_switchname": "{{env `HYPERV_VIRTUAL_SWITCH`}}",
-    "vm_name": "centos-7.5",
+    "vm_name": "ubuntu-1604",
     "iso_checksum_type": "sha256",
-    "iso_checksum": "714acc0aefb32b7d51b515e25546835e55a90da9fb00417fbee2d03a62801efd",
-    "iso_url":"iso/CentOS-7.5-x86_64-Minimal-1804.iso"
+    "iso_checksum": "29a8b9009509b39d542ecb229787cdf48f05e739a932289de9e9858d7c487c80",
+    "iso_url":"iso/ubuntu-16.04.4-server-amd64.iso"
   },
   "builders": [
     {
@@ -25,7 +25,7 @@
       "http_directory": "http",
       "iso_urls": [
         "{{ user `iso_url` }}",
-        "http://mirrors.mit.edu/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1804.iso"
+        "http://releases.ubuntu.com/16.04/ubuntu-16.04.4-server-amd64.iso",
       ],
       "iso_checksum_type": "{{ user `iso_checksum_type` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
@@ -34,7 +34,7 @@
       "ssh_port": 22,
       "ssh_wait_timeout": "2h",
       "shutdown_command": "echo 'vagrant'|sudo -S /sbin/halt -h -p",
-      "guest_additions_mode": "{{ user `guest_additions_mode` }}",      
+      "guest_additions_mode": "{{ user `guest_additions_mode` }}",
       "virtualbox_version_file": ".vbox_version",
       "vm_name": "{{user `vm_name`}}",
       "vboxmanage": [
@@ -67,7 +67,7 @@
       "http_directory": "http",
       "iso_urls": [
         "{{ user `iso_url` }}",
-        "http://mirrors.mit.edu/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1804.iso"
+        "http://releases.ubuntu.com/16.04/ubuntu-16.04.4-server-amd64.iso",
       ],
       "iso_checksum_type": "{{ user `iso_checksum_type` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
@@ -89,7 +89,7 @@
       "http_directory": "http",
       "iso_urls": [
         "{{ user `iso_url` }}",
-        "http://mirrors.mit.edu/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1804.iso"
+        "http://releases.ubuntu.com/16.04/ubuntu-16.04.4-server-amd64.iso",
       ],
       "iso_checksum_type": "{{ user `iso_checksum_type` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
@@ -127,8 +127,8 @@
     {
       "type": "vagrant",
       "keep_input_artifact": true,
-      "output": "builds/centos75-{{.Provider}}.box",
-      "vagrantfile_template": "templates/vagrantfile-centos-75.template"
+      "output": "builds/ubuntu16-{{.Provider}}.box",
+      "vagrantfile_template": "templates/vagrantfile-ubuntu-16.template"
     }
   ]
 }

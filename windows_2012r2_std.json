@@ -104,13 +104,9 @@
       "./scripts/microsoft-updates.bat",
       "./scripts/unattend.xml"
     ],        
-    "vmx_data": {
-        "RemoteDisplay.vnc.enabled": "false",
-        "RemoteDisplay.vnc.port": "5900",
+    "vmx_data": {  
         "memsize": "{{user `memory`}}",
-        "numvcpus": "{{user `cpu`}}",
-        "scsi0.virtualDev": "lsisas1068",          
-        "ethernet0.present": "TRUE"
+        "numvcpus": "{{user `cpu`}}"        
     }
   }
   ],
