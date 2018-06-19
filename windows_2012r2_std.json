@@ -1,6 +1,6 @@
 {
   "variables": {
-    "autounattend": "./answer_files/server_1803/Autounattend.xml",
+    "autounattend": "./answer_files/2012_r2std/Autounattend.xml",
     "guest_additions_mode": "disable",
     "headless": "false",
     "disk_size": "61440",
@@ -8,14 +8,13 @@
     "memory": "1024",
     "cpu": "2",
     "hyperv_switchname": "{{env `HYPERV_VIRTUAL_SWITCH`}}",
-    "vm_name": "windows-server-1803",
     "iso_checksum_type": "sha1",
-    "iso_checksum": "7b389be8e691984b913c1985cbf35732a525f859",
-    "iso_url": "iso/en_windows_server_version_1803_x64_dvd_12063476.iso"
+    "iso_checksum": "d4b28f350981a7c3306dd409b172aea10d8599ac",
+    "iso_url": "iso/SW_DVD9_Windows_Svr_Std_and_DataCtr_2012_R2_64Bit_English_-3_MLF_X19-53588.ISO"
   },
   "builders": [
     {
-      "name": "windows-server-1803-virtualbox",
+      "name": "windows-2012R2-std-virtualbox",
       "type": "virtualbox-iso",
       "disk_size": "{{user `disk_size`}}",
       "vboxmanage": [
@@ -24,15 +23,14 @@
       ],
       "guest_additions_mode": "{{ user `guest_additions_mode` }}",
       "guest_additions_path": "C:\\Program Files\\Oracle\\VirtualBox\\VBoxGuestAdditions.iso",
-      "guest_os_type": "Windows2016_64",      
+      "guest_os_type": "Windows2012_64",      
       "headless": "{{ user `headless` }}",
       "iso_urls": [ "{{ user `iso_url` }}",
-                    "https://download.my.visualstudio.com/db/en_windows_server_version_1803_updated_jan_2018_x64_dvd_100492040.iso"
+                    "http://care.dlservice.microsoft.com/dl/download/6/2/A/62A76ABB-9990-4EFC-A4FE-C7D698DAEB96/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_EN-US-IR3_SSS_X64FREE_EN-US_DV9.ISO"
                   ],
       "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+      "iso_checksum_type": "sha1",
       "boot_wait": "5m",
-      "vm_name": "{{user `vm_name`}}",
       "communicator": "winrm",
       "winrm_username": "vagrant",
       "winrm_password": "vagrant",
@@ -48,45 +46,45 @@
         "./scripts/unattend.xml"
       ]
     },
-     {
-      "name": "windows-server-1803-hyperv",
-      "type": "hyperv-iso",
-      "boot_wait": "5m",      
-      "cpu": "{{user `cpu`}}",
-      "ram_size": "{{user `memory`}}",
-      "disk_size": "{{user `disk_size`}}",      
-      "enable_secure_boot": true,
-      "enable_virtualization_extensions": true,
-      "floppy_files": [
-        "{{user `autounattend`}}",
-        "./scripts/disable-screensaver.ps1",
-        "./scripts/disable-winrm.ps1",
-        "./scripts/enable-winrm.ps1",
-        "./scripts/microsoft-updates.bat",
-        "./scripts/unattend.xml",
-        "./scripts/sysprep.bat"
-      ],       
-      "guest_additions_mode": "disable",
-      "iso_checksum": "{{user `iso_checksum`}}",
-      "iso_checksum_type": "{{user `iso_checksum_type`}}",
-      "iso_url": [ "{{ user `iso_url` }}",
-                    "https://download.my.visualstudio.com/db/en_windows_server_version_1803_updated_jan_2018_x64_dvd_100492040.iso"
-                  ],
-      "shutdown_command": "a:/sysprep.bat",
-      "switch_name": "{{user `hyperv_switchname`}}",      
-      "vm_name": "{{user `vm_name`}}",      
-      "communicator": "winrm",
-      "winrm_password": "vagrant",
-      "winrm_timeout": "12h",
-      "winrm_username": "vagrant"
-    },
    {
+    "name": "windows-2012R2-std-hyperv",
+    "type": "hyperv-iso",
+    "boot_wait": "5m",
+    "communicator": "winrm",
+    "cpu": "{{user `cpu`}}",
+    "ram_size": "{{user `memory`}}",
+    "disk_size": "{{user `disk_size`}}",
+    "enable_secure_boot": true,
+    "enable_virtualization_extensions": true,
+    "floppy_files": [
+      "{{user `autounattend`}}",
+      "./scripts/disable-screensaver.ps1",
+      "./scripts/disable-winrm.ps1",
+      "./scripts/enable-winrm.ps1",
+      "./scripts/microsoft-updates.bat",
+      "./scripts/unattend.xml",
+      "./scripts/sysprep.bat"
+    ],
+    "guest_additions_mode": "disable",
+    "iso_checksum": "{{user `iso_checksum`}}",
+    "iso_checksum_type": "{{user `iso_checksum_type`}}",
+    "iso_urls": [ "{{ user `iso_url` }}",
+                  "http://care.dlservice.microsoft.com/dl/download/6/2/A/62A76ABB-9990-4EFC-A4FE-C7D698DAEB96/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_EN-US-IR3_SSS_X64FREE_EN-US_DV9.ISO"
+                ],
+    "shutdown_command": "a:/sysprep.bat",
+    "switch_name": "{{user `hyperv_switchname`}}",      
+    "vm_name": "windows_2012_r2",
+    "winrm_password": "vagrant",
+    "winrm_timeout": "{{user `winrm_timeout`}}",
+    "winrm_username": "vagrant"
+  },
+  {
     "name": "windows-server-1803-vmware",      
     "type": "vmware-iso",
     "disk_size": "{{user `disk_size`}}",
     "headless": "{{ user `headless` }}",
     "iso_urls": [ "{{ user `iso_url` }}",
-                  "https://download.my.visualstudio.com/db/en_windows_server_version_1803_updated_jan_2018_x64_dvd_100492040.iso"
+                  "http://care.dlservice.microsoft.com/dl/download/6/2/A/62A76ABB-9990-4EFC-A4FE-C7D698DAEB96/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_EN-US-IR3_SSS_X64FREE_EN-US_DV9.ISO"
                 ],
     "iso_checksum": "{{ user `iso_checksum` }}",
     "iso_checksum_type": "{{ user `iso_checksum_type` }}",
@@ -132,8 +130,8 @@
     [{
       "type": "vagrant",
       "keep_input_artifact": true,
-      "output": "builds/windows_server_1803_{{.Provider}}.box",
-      "vagrantfile_template": "templates/vagrantfile-windows_server_1803.template"
+      "output": "builds/windows_2012_r2_{{.Provider}}.box",
+      "vagrantfile_template": "templates/vagrantfile-windows_2012_r2.template"
      }
     ]
   ]

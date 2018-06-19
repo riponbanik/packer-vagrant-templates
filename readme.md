@@ -71,7 +71,7 @@ packer build -var 'iso_url=./server2016.iso' .\windows_2016.json
 If you do not want to keep the artifact (.ovf) created by the box (which is helpful to use with other hypervisor e.g. VMWare)
 change to following in the template. Using variable for boolean does not seem to work at this moment.
 
-keep_input_artifact": false
+keep_input_artifact: false
 
 ### Windows Updates
 

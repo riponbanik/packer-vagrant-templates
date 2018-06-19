@@ -7,7 +7,7 @@
     "disk_type_id": "1",    
     "memory": "1024",
     "cpu": "2",
-    "hyperv_switchname": "{{env `hyperv_switchname`}}",
+    "hyperv_switchname": "{{env `HYPERV_VIRTUAL_SWITCH`}}",
     "iso_checksum_type": "sha1",
     "iso_checksum": "7adc82e00f1367b43897bb969a75bbf96d46f588",
     "iso_url": "iso/en_windows_server_2016_updated_feb_2018_x64_dvd_11636692.iso"
@@ -68,7 +68,9 @@
       "guest_additions_mode": "disable",
       "iso_checksum": "{{user `iso_checksum`}}",
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
-      "iso_url": "{{user `iso_url`}}",     
+      "iso_urls": [ "{{ user `iso_url` }}",
+                    "http://care.dlservice.microsoft.com/dl/download/1/4/9/149D5452-9B29-4274-B6B3-5361DBDA30BC/14393.0.161119-1705.RS1_REFRESH_SERVER_EVAL_X64FRE_EN-US.ISO"
+                  ],
       "shutdown_command": "a:/sysprep.bat",
       "switch_name": "{{user `hyperv_switchname`}}",      
       "vm_name": "windows_2016_std",
@@ -81,7 +83,6 @@
       "name": "windows-2016-std-vmware",      
       "type": "vmware-iso",
       "disk_size": "{{user `disk_size`}}",
-
       "headless": "{{ user `headless` }}",
       "iso_urls": [ "{{ user `iso_url` }}",
                     "http://care.dlservice.microsoft.com/dl/download/1/4/9/149D5452-9B29-4274-B6B3-5361DBDA30BC/14393.0.161119-1705.RS1_REFRESH_SERVER_EVAL_X64FRE_EN-US.ISO"
@@ -104,16 +105,14 @@
         "./scripts/microsoft-updates.bat",
         "./scripts/unattend.xml"
       ],        
-      "vmx_data": {
-          "gui.fitguestusingnativedisplayresolution": false,
-          "memsize": "{{user `memory`}}",
-          "numvcpus": "{{user `cpu`}}",
-          "scsi0.virtualDev": "lsisas1068",          
-          "ethernet0.present": "TRUE"
-      },
-      "vmx_data_post": {
-          "ethernet0.virtualDev": "vmxnet3"
-      }
+       "vmx_data": {
+        "RemoteDisplay.vnc.enabled": "false",
+        "RemoteDisplay.vnc.port": "5900",
+        "memsize": "{{user `memory`}}",
+        "numvcpus": "{{user `cpu`}}",
+        "scsi0.virtualDev": "lsisas1068",          
+        "ethernet0.present": "TRUE"
+     }
     }
   ],
   "provisioners": [    
