@@ -4,7 +4,7 @@ packer build -var iso_url="iso/SW_DVD9_Windows_Svr_Std_and_DataCtr_2012_R2_64Bit
              -var iso_checksum_type=sha1 windows-2012r2.json
 
 # Build box only particular type e.g. virtualbox
-packer build -only=virtualbox=iso windows-2012r2.json
+packer build -only=virtualbox-iso windows-2012r2.json
 
 # Build virtualbox with specific name - will create own outout directory
 packer build -only=windows-2012R2-std-virtualbox windows-2012r2.json 

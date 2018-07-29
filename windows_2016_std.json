@@ -114,8 +114,7 @@
   "provisioners": [    
     {
       "type": "windows-shell",
-      "scripts": [
-        "./scripts/vm-guest-tools.bat",
+      "scripts": [        
         "./scripts/enable-rdp.bat",
         "./scripts/compile-dotnet-assemblies.bat",
         "./scripts/compact.bat"
