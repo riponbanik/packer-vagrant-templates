@@ -75,7 +75,7 @@
     "switch_name": "{{user `hyperv_switchname`}}",      
     "vm_name": "windows_2012_r2",
     "winrm_password": "vagrant",
-    "winrm_timeout": "{{user `winrm_timeout`}}",
+    "winrm_timeout": "12h",
     "winrm_username": "vagrant"
   },
   {
