@@ -21,11 +21,11 @@
       "boot_wait": "10s",
       "disk_size": "{{user `disk_size`}}",
       "guest_os_type": "RedHat_64",
-      "headless": "{{ user `headless` }}",f
+      "headless": "{{ user `headless` }}",
       "http_directory": "http",
       "iso_urls": [
         "{{ user `iso_url` }}",
-        "http://releases.ubuntu.com/16.04/ubuntu-16.04.4-server-amd64.iso",
+        "http://releases.ubuntu.com/16.04/ubuntu-16.04.4-server-amd64.iso"
       ],
       "iso_checksum_type": "{{ user `iso_checksum_type` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
@@ -67,7 +67,7 @@
       "http_directory": "http",
       "iso_urls": [
         "{{ user `iso_url` }}",
-        "http://releases.ubuntu.com/16.04/ubuntu-16.04.4-server-amd64.iso",
+        "http://releases.ubuntu.com/16.04/ubuntu-16.04.4-server-amd64.iso"
       ],
       "iso_checksum_type": "{{ user `iso_checksum_type` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
@@ -89,7 +89,7 @@
       "http_directory": "http",
       "iso_urls": [
         "{{ user `iso_url` }}",
-        "http://releases.ubuntu.com/16.04/ubuntu-16.04.4-server-amd64.iso",
+        "http://releases.ubuntu.com/16.04/ubuntu-16.04.4-server-amd64.iso"
       ],
       "iso_checksum_type": "{{ user `iso_checksum_type` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
