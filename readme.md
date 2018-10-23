@@ -1,4 +1,4 @@
-# packer-build-templates
+# packer-vagrant-templates
 This repository is inspired by mwrock, StefanScherer, geerlingguy and others. Also some content taken from them.
 
 Using provisioner like BoxStarter, Ansible, Chef and others in the build process add complexity to the user who just wants to quickly build a box to try with different provisioner like above. 
