@@ -79,7 +79,7 @@
     "winrm_username": "vagrant"
   },
   {
-    "name": "windows-server-1803-vmware",      
+    "name": "windows-2012R2-std-vmware",      
     "type": "vmware-iso",
     "disk_size": "{{user `disk_size`}}",
     "headless": "{{ user `headless` }}",
